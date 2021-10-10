@@ -1,7 +1,1 @@
-v
-
-                  v  ,  <
-                                
->   "dlrow olleH" >  :  |
-  
-                        @
+"dlrow olleH">:#,_@

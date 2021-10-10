@@ -92,7 +92,7 @@ class Interpreter:
         if val == 0:
             self.direction = Direction.RIGHT
         else:
-            self.direction = Direction.DOWN
+            self.direction = Direction.LEFT
 
     def change_direction(self):
         directions = {
@@ -103,6 +103,16 @@ class Interpreter:
         }
         self.direction = directions[self.current]
 
+    def bridge(self):
+        if self.direction == Direction.UP:
+            self.index[0] -= 1
+        if self.direction == Direction.RIGHT:
+            self.index[1] += 1
+        if self.direction == Direction.DOWN:
+            self.index[0] += 1
+        if self.direction == Direction.LEFT:
+            self.index[1] -= 1
+
     def evaluate_current(self):
         functions = {
             '"': self.toggle_stringmode,
@@ -111,6 +121,7 @@ class Interpreter:
             ":": self.duplicate_top_stack_val,
             "|": self.vertical_if,
             "_": self.horizontal_if,
+            "#": self.bridge,
             "@": self.stop,
         }
         for token in functions.keys():
