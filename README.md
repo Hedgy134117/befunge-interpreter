@@ -5,7 +5,7 @@ A befunge interpreter written in python
 Run with `python main.py <filepath>`
 
 ## Features
-Definitions of instructions found (here)[https://esolangs.org/wiki/Befunge]
+Definitions of instructions found [here](https://esolangs.org/wiki/Befunge)
 - [ ] `+`	Addition: Pop two values a and b, then push the result of a+b
 - [ ] `-`	Subtraction: Pop two values a and b, then push the result of b-a
 - [ ] `*`	Multiplication: Pop two values a and b, then push the result of a*b
