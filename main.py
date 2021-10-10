@@ -31,18 +31,28 @@ class Interpreter:
         self.stringmode = False
         self.index = [0, 0]  # y, x coordinates
         self.direction = Direction.RIGHT
-        self.grid = self.create_grid()
+        self.grid = []
+        self.create_grid()
 
-    def create_grid(self) -> typing.List[typing.List[str]]:
-        grid = []
+    def create_grid(self):
+        temp_grid = []
         with open(self.fp) as f:
+            longest_line_length = 0
             for line in f.readlines():
+                if len(line) > longest_line_length:
+                    longest_line_length = len(line)
                 line_list = []
                 for char in line:
                     line_list.append(char)
-                print(line_list)
-                grid.append(line_list)
-        return grid
+                temp_grid.append(line_list)
+
+            # Pad the grid array so it becomes rectangular
+            for line in temp_grid:
+                space_to_add = longest_line_length - len(line)
+                line += [" "] * space_to_add
+                print(line)
+
+        self.grid = temp_grid
 
     def toggle_stringmode(self):
         if self.stringmode:
