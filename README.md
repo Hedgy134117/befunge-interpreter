@@ -18,10 +18,10 @@ Definitions of instructions found [here](https://esolangs.org/wiki/Befunge)
 - [x] `^`	PC direction up
 - [x] `v`	PC direction down
 - [ ] `?`	Random PC direction
-- [ ] `_`	Horizontal IF: pop a value; set direction to right if value=0, set to left otherwise
-- [ ] `|`	Vertical IF: pop a value; set direction to down if value=0, set to up otherwise
+- [x] `_`	Horizontal IF: pop a value; set direction to right if value=0, set to left otherwise
+- [x] `|`	Vertical IF: pop a value; set direction to down if value=0, set to up otherwise
 - [x] `"`	Toggle stringmode (push each character's ASCII value all the way up to the next ")
-- [ ] `:`	Duplicate top stack value
+- [x] `:`	Duplicate top stack value
 - [ ] `\`	Swap top stack values
 - [ ] `$`	Pop (remove) top stack value and discard
 - [ ] `.`	Pop top of stack and output as integer

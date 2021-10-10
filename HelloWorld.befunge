@@ -1,4 +1,7 @@
-v   >   v
->   ^    
-          
-        > "dlrow olleH" ,,,,,,,,,,, @
+v
+
+                  v  ,  <
+                                
+>   "dlrow olleH" >  :  |
+                         
+                        @

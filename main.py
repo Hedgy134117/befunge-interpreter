@@ -40,6 +40,7 @@ class Interpreter:
                 line_list = []
                 for char in line:
                     line_list.append(char)
+                print(line_list)
                 grid.append(line_list)
         return grid
 
@@ -60,6 +61,29 @@ class Interpreter:
     def pop_char_from_stack(self):
         print(chr(self.stack.pop(-1)), end="")
 
+    def pop_stack(self):
+        if len(self.stack) > 0:
+            return self.stack.pop(-1)
+        return 0
+
+    def duplicate_top_stack_val(self):
+        if len(self.stack) > 0:
+            self.stack.append(self.stack[-1])
+
+    def vertical_if(self):
+        val = self.pop_stack()
+        if val == 0:
+            self.direction = Direction.DOWN
+        else:
+            self.direction = Direction.UP
+
+    def horizontal_if(self):
+        val = self.pop_stack()
+        if val == 0:
+            self.direction = Direction.RIGHT
+        else:
+            self.direction = Direction.DOWN
+
     def change_direction(self):
         directions = {
             "^": Direction.UP,
@@ -74,6 +98,9 @@ class Interpreter:
             '"': self.toggle_stringmode,
             ",": self.pop_char_from_stack,
             "^>v<": self.change_direction,
+            ":": self.duplicate_top_stack_val,
+            "|": self.vertical_if,
+            "_": self.horizontal_if,
             "@": self.stop,
         }
         for token in functions.keys():
@@ -83,17 +110,17 @@ class Interpreter:
         else:
             self.add_char_to_stack()
 
-    def test(self):
+    def run(self):
         while self.running:
             self.current = self.grid[self.index[0]][self.index[1]]
             self.evaluate_current()
             # y, x coordinates
             if self.direction == Direction.UP:
-                self.index[0] += 1
+                self.index[0] -= 1
             elif self.direction == Direction.RIGHT:
                 self.index[1] += 1
             elif self.direction == Direction.DOWN:
-                self.index[0] -= 1
+                self.index[0] += 1
             elif self.direction == Direction.LEFT:
                 self.index[1] -= 1
 
@@ -101,4 +128,4 @@ class Interpreter:
 if __name__ == "__main__":
     filepath = parse_args().filename[0]
     interpreter = Interpreter(filepath)
-    interpreter.test()
+    interpreter.run()
