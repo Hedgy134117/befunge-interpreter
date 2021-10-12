@@ -2,6 +2,7 @@ import argparse
 import typing
 import enum
 import random
+import math
 
 
 def parse_args() -> argparse.Namespace:
@@ -62,6 +63,32 @@ class Interpreter:
                 print(line)
 
         self.grid = temp_grid
+
+    def add(self):
+        a = int(self.stack.pop(-1))
+        b = int(self.stack.pop(-1))
+        self.stack.append(a + b)
+    
+    def sub(self):
+        a = int(self.stack.pop(-1))
+        b = int(self.stack.pop(-1))
+        self.stack.append(b - a)
+    
+    def mult(self):
+        a = int(self.stack.pop(-1))
+        b = int(self.stack.pop(-1))
+        self.stack.append(a * b)
+    
+    def div(self):
+        a = int(self.stack.pop(-1))
+        b = int(self.stack.pop(-1))
+        try:
+            self.stack.append(math.floor(b / a))
+        except ZeroDivisionError:
+            raise Exception(f"Attempted to divide {b} / {a}")
+    
+    def pop_discard(self):
+        self.pop_stack()
 
     def toggle_stringmode(self):
         if self.stringmode:
@@ -129,6 +156,11 @@ class Interpreter:
 
     def evaluate_current(self):
         functions = {
+            "+": self.add,
+            "-": self.sub,
+            "*": self.mult,
+            "/": self.div,
+            "$": self.pop_discard,
             '"': self.toggle_stringmode,
             ",": self.pop_char_from_stack,
             ".": self.pop_num_from_stack,
