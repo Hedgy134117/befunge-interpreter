@@ -17,14 +17,14 @@ Definitions of instructions found [here](https://esolangs.org/wiki/Befunge)
 - [x] `<`	PC direction left
 - [x] `^`	PC direction up
 - [x] `v`	PC direction down
-- [ ] `?`	Random PC direction
+- [x] `?`	Random PC direction
 - [x] `_`	Horizontal IF: pop a value; set direction to right if value=0, set to left otherwise
 - [x] `|`	Vertical IF: pop a value; set direction to down if value=0, set to up otherwise
 - [x] `"`	Toggle stringmode (push each character's ASCII value all the way up to the next ")
 - [x] `:`	Duplicate top stack value
 - [ ] `\`	Swap top stack values
 - [ ] `$`	Pop (remove) top stack value and discard
-- [ ] `.`	Pop top of stack and output as integer
+- [x] `.`	Pop top of stack and output as integer
 - [x] `,`	Pop top of stack and output as ASCII character
 - [x] `#`	Bridge: jump over next command in the current direction of the current PC
 - [ ] `g`	A "get" call (a way to retrieve data in storage). Pop two values y and x, then push the ASCII value of the character at that position in the program. If (x,y) is out of bounds, push 0
@@ -32,4 +32,4 @@ Definitions of instructions found [here](https://esolangs.org/wiki/Befunge)
 - [ ] `&`	Get integer from user and push it
 - [ ] `~`	Get character from user and push it
 - [x] `@`	End program
-- [ ] `0 – 9`	Push corresponding number onto the stack
+- [x] `0 – 9`	Push corresponding number onto the stack
