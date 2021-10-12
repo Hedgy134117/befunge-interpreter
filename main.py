@@ -87,6 +87,26 @@ class Interpreter:
         except ZeroDivisionError:
             raise Exception(f"Attempted to divide {b} / {a}")
     
+    def mod(self):
+        a = int(self.stack.pop(-1))
+        b = int(self.stack.pop(-1))
+        self.stack.append(b % a)
+    
+    def log_not(self):
+        a = int(self.stack.pop(-1))
+        if a == 0:
+            self.stack.append(1)
+        else:
+            self.stack.append(0)
+    
+    def log_greater(self):
+        a = int(self.stack.pop(-1))
+        b = int(self.stack.pop(-1))
+        if b > a:
+            self.stack.append(1)
+        else:
+            self.stack.append(0)
+    
     def pop_discard(self):
         self.pop_stack()
 
@@ -160,6 +180,9 @@ class Interpreter:
             "-": self.sub,
             "*": self.mult,
             "/": self.div,
+            "%": self.mod,
+            "!": self.log_not,
+            "`": self.log_greater,
             "$": self.pop_discard,
             '"': self.toggle_stringmode,
             ",": self.pop_char_from_stack,
