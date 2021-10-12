@@ -173,6 +173,12 @@ class Interpreter:
             self.index[0] += 1
         if self.direction == Direction.LEFT:
             self.index[1] -= 1
+    
+    def swap(self):
+        try:
+            self.stack[-2], self.stack[-1] = self.stack[-1], self.stack[-2]
+        except IndexError:
+            pass
 
     def evaluate_current(self):
         functions = {
@@ -183,6 +189,7 @@ class Interpreter:
             "%": self.mod,
             "!": self.log_not,
             "`": self.log_greater,
+            "\\": self.swap,
             "$": self.pop_discard,
             '"': self.toggle_stringmode,
             ",": self.pop_char_from_stack,
