@@ -22,7 +22,7 @@ Definitions of instructions found [here](https://esolangs.org/wiki/Befunge)
 - [x] `|`	Vertical IF: pop a value; set direction to down if value=0, set to up otherwise
 - [x] `"`	Toggle stringmode (push each character's ASCII value all the way up to the next ")
 - [x] `:`	Duplicate top stack value
-- [ ] `\`	Swap top stack values
+- [x] `\`	Swap top stack values
 - [x] `$`	Pop (remove) top stack value and discard
 - [x] `.`	Pop top of stack and output as integer
 - [x] `,`	Pop top of stack and output as ASCII character
