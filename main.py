@@ -148,19 +148,33 @@ class Interpreter:
             self.add_char_to_stack()
             self.add_num_to_stack()
 
+    def move_index(self):
+        # y, x coordinates
+        if self.direction == Direction.UP:
+            self.index[0] -= 1
+        elif self.direction == Direction.RIGHT:
+            self.index[1] += 1
+        elif self.direction == Direction.DOWN:
+            self.index[0] += 1
+        elif self.direction == Direction.LEFT:
+            self.index[1] -= 1
+        
+        # Wrapping
+        if self.index[0] > len(self.grid):
+            self.index[0] = 0
+        elif self.index[0] < 0:
+            self.index[0] = len(self.grid) - 1
+        elif self.index[1] > len(self.grid[0]):
+            self.index[1] = 0
+        elif self.index[1] < 0:
+            self.index[1] = len(self.grid[0]) - 1
+
     def run(self):
         while self.running:
             self.current = self.grid[self.index[0]][self.index[1]]
             self.evaluate_current()
-            # y, x coordinates
-            if self.direction == Direction.UP:
-                self.index[0] -= 1
-            elif self.direction == Direction.RIGHT:
-                self.index[1] += 1
-            elif self.direction == Direction.DOWN:
-                self.index[0] += 1
-            elif self.direction == Direction.LEFT:
-                self.index[1] -= 1
+            self.move_index()
+            
 
 
 if __name__ == "__main__":
