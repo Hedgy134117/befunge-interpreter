@@ -10,9 +10,9 @@ Definitions of instructions found [here](https://esolangs.org/wiki/Befunge)
 - [x] `-`	Subtraction: Pop two values a and b, then push the result of b-a
 - [x] `*`	Multiplication: Pop two values a and b, then push the result of a*b
 - [x] `/`	Integer division: Pop two values a and b, then push the result of b/a, rounded down. According to the specifications, if a is zero, ask the user what result they want.
-- [ ] `%`	Modulo: Pop two values a and b, then push the remainder of the integer division of b/a.
-- [ ] `!`	Logical NOT: Pop a value. If the value is zero, push 1; otherwise, push zero.
-- [ ] `\``	Greater than: Pop two values a and b, then push 1 if b>a, otherwise zero.
+- [x] `%`	Modulo: Pop two values a and b, then push the remainder of the integer division of b/a.
+- [x] `!`	Logical NOT: Pop a value. If the value is zero, push 1; otherwise, push zero.
+- [x] `\``	Greater than: Pop two values a and b, then push 1 if b>a, otherwise zero.
 - [x] `>`	PC direction right
 - [x] `<`	PC direction left
 - [x] `^`	PC direction up
