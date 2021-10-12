@@ -6,10 +6,10 @@ Run with `python main.py <filepath>`
 
 ## Features
 Definitions of instructions found [here](https://esolangs.org/wiki/Befunge)
-- [ ] `+`	Addition: Pop two values a and b, then push the result of a+b
-- [ ] `-`	Subtraction: Pop two values a and b, then push the result of b-a
-- [ ] `*`	Multiplication: Pop two values a and b, then push the result of a*b
-- [ ] `/`	Integer division: Pop two values a and b, then push the result of b/a, rounded down. According to the specifications, if a - [ ] `i`s zero, ask the user what result they want.
+- [x] `+`	Addition: Pop two values a and b, then push the result of a+b
+- [x] `-`	Subtraction: Pop two values a and b, then push the result of b-a
+- [x] `*`	Multiplication: Pop two values a and b, then push the result of a*b
+- [x] `/`	Integer division: Pop two values a and b, then push the result of b/a, rounded down. According to the specifications, if a is zero, ask the user what result they want.
 - [ ] `%`	Modulo: Pop two values a and b, then push the remainder of the integer division of b/a.
 - [ ] `!`	Logical NOT: Pop a value. If the value is zero, push 1; otherwise, push zero.
 - [ ] `\``	Greater than: Pop two values a and b, then push 1 if b>a, otherwise zero.
@@ -23,7 +23,7 @@ Definitions of instructions found [here](https://esolangs.org/wiki/Befunge)
 - [x] `"`	Toggle stringmode (push each character's ASCII value all the way up to the next ")
 - [x] `:`	Duplicate top stack value
 - [ ] `\`	Swap top stack values
-- [ ] `$`	Pop (remove) top stack value and discard
+- [x] `$`	Pop (remove) top stack value and discard
 - [x] `.`	Pop top of stack and output as integer
 - [x] `,`	Pop top of stack and output as ASCII character
 - [x] `#`	Bridge: jump over next command in the current direction of the current PC
