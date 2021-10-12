@@ -1,6 +1,7 @@
 import argparse
 import typing
 import enum
+import random
 
 
 def parse_args() -> argparse.Namespace:
@@ -20,6 +21,14 @@ class Direction(enum.Enum):
     RIGHT = enum.auto()
     DOWN = enum.auto()
     LEFT = enum.auto()
+
+
+directions = {
+    "^": Direction.UP,
+    ">": Direction.RIGHT,
+    "v": Direction.DOWN,
+    "<": Direction.LEFT,
+}
 
 
 class Interpreter:
@@ -67,9 +76,17 @@ class Interpreter:
         if self.stringmode == False or self.current.isascii() == False:
             return
         self.stack.append(ord(self.current))
+    
+    def add_num_to_stack(self):
+        if self.current.isnumeric() == False:
+            return
+        self.stack.append(self.current)
 
     def pop_char_from_stack(self):
         print(chr(self.stack.pop(-1)), end="")
+
+    def pop_num_from_stack(self):
+        print(self.stack.pop(-1), end="")
 
     def pop_stack(self):
         if len(self.stack) > 0:
@@ -95,13 +112,10 @@ class Interpreter:
             self.direction = Direction.LEFT
 
     def change_direction(self):
-        directions = {
-            "^": Direction.UP,
-            ">": Direction.RIGHT,
-            "v": Direction.DOWN,
-            "<": Direction.LEFT,
-        }
         self.direction = directions[self.current]
+    
+    def random_direction(self):
+        self.direction = random.choice(list(directions.values()))
 
     def bridge(self):
         if self.direction == Direction.UP:
@@ -117,11 +131,13 @@ class Interpreter:
         functions = {
             '"': self.toggle_stringmode,
             ",": self.pop_char_from_stack,
+            ".": self.pop_num_from_stack,
             "^>v<": self.change_direction,
             ":": self.duplicate_top_stack_val,
             "|": self.vertical_if,
             "_": self.horizontal_if,
             "#": self.bridge,
+            "?": self.random_direction,
             "@": self.stop,
         }
         for token in functions.keys():
@@ -130,6 +146,7 @@ class Interpreter:
                 break
         else:
             self.add_char_to_stack()
+            self.add_num_to_stack()
 
     def run(self):
         while self.running:
