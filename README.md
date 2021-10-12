@@ -29,7 +29,7 @@ Definitions of instructions found [here](https://esolangs.org/wiki/Befunge)
 - [x] `#`	Bridge: jump over next command in the current direction of the current PC
 - [ ] `g`	A "get" call (a way to retrieve data in storage). Pop two values y and x, then push the ASCII value of the character at that position in the program. If (x,y) is out of bounds, push 0
 - [ ] `p`	A "put" call (a way to store a value for later use). Pop three values y, x and v, then change the character at the position (x,y) in the program to the character with ASCII value v
-- [ ] `&`	Get integer from user and push it
-- [ ] `~`	Get character from user and push it
+- [x] `&`	Get integer from user and push it
+- [x] `~`	Get character from user and push it
 - [x] `@`	End program
 - [x] `0 – 9`	Push corresponding number onto the stack
