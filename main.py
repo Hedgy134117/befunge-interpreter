@@ -174,6 +174,11 @@ class Interpreter:
         if self.direction == Direction.LEFT:
             self.index[1] -= 1
     
+    def get(self):
+        y = int(self.stack.pop(-1))
+        x = int(self.stack.pop(-1))
+        self.stack.append(ord(self.grid[y][x]))
+    
     def swap(self):
         try:
             self.stack[-2], self.stack[-1] = self.stack[-1], self.stack[-2]
@@ -205,6 +210,7 @@ class Interpreter:
             "|": self.vertical_if,
             "_": self.horizontal_if,
             "#": self.bridge,
+            "g": self.get,
             "?": self.random_direction,
             "&": self.num_input,
             "~": self.chr_input,
