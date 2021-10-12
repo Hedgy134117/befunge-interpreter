@@ -179,6 +179,12 @@ class Interpreter:
             self.stack[-2], self.stack[-1] = self.stack[-1], self.stack[-2]
         except IndexError:
             pass
+    
+    def num_input(self):
+        self.stack.append(int(input()))
+
+    def chr_input(self):
+        self.stack.append(ord(input()))
 
     def evaluate_current(self):
         functions = {
@@ -200,6 +206,8 @@ class Interpreter:
             "_": self.horizontal_if,
             "#": self.bridge,
             "?": self.random_direction,
+            "&": self.num_input,
+            "~": self.chr_input,
             "@": self.stop,
         }
         for token in functions.keys():
