@@ -215,11 +215,11 @@ class Interpreter:
             self.index[1] -= 1
         
         # Wrapping
-        if self.index[0] > len(self.grid):
+        if self.index[0] >= len(self.grid):
             self.index[0] = 0
         elif self.index[0] < 0:
             self.index[0] = len(self.grid) - 1
-        elif self.index[1] > len(self.grid[0]):
+        elif self.index[1] >= len(self.grid[0]):
             self.index[1] = 0
         elif self.index[1] < 0:
             self.index[1] = len(self.grid[0]) - 1
