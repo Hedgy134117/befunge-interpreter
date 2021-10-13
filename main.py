@@ -60,7 +60,6 @@ class Interpreter:
             for line in temp_grid:
                 space_to_add = longest_line_length - len(line)
                 line += [" "] * space_to_add
-                print(line)
 
         self.grid = temp_grid
 
@@ -120,7 +119,7 @@ class Interpreter:
         self.running = False
 
     def add_char_to_stack(self):
-        if self.stringmode == False or self.current.isascii() == False:
+        if self.current.isascii() == False:
             return
         self.stack.append(ord(self.current))
     
@@ -178,6 +177,12 @@ class Interpreter:
         y = int(self.stack.pop(-1))
         x = int(self.stack.pop(-1))
         self.stack.append(ord(self.grid[y][x]))
+
+    def put(self):
+        y = int(self.stack.pop(-1))
+        x = int(self.stack.pop(-1))
+        v = chr(self.stack.pop(-1))
+        self.grid[y][x] = v
     
     def swap(self):
         try:
@@ -192,6 +197,10 @@ class Interpreter:
         self.stack.append(ord(input()))
 
     def evaluate_current(self):
+        if self.stringmode and self.current != '"':
+            self.add_char_to_stack()
+            return
+        
         functions = {
             "+": self.add,
             "-": self.sub,
@@ -211,6 +220,7 @@ class Interpreter:
             "_": self.horizontal_if,
             "#": self.bridge,
             "g": self.get,
+            "p": self.put,
             "?": self.random_direction,
             "&": self.num_input,
             "~": self.chr_input,
@@ -221,7 +231,6 @@ class Interpreter:
                 functions[token]()
                 break
         else:
-            self.add_char_to_stack()
             self.add_num_to_stack()
 
     def move_index(self):
