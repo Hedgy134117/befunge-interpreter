@@ -126,7 +126,7 @@ class Interpreter:
     def add_num_to_stack(self):
         if self.current.isnumeric() == False:
             return
-        self.stack.append(self.current)
+        self.stack.append(int(self.current))
 
     def pop_char_from_stack(self):
         print(chr(self.stack.pop(-1)), end="")
@@ -256,10 +256,11 @@ class Interpreter:
 
     def run(self):
         while self.running:
+            # print(self.stack)
             self.current = self.grid[self.index[0]][self.index[1]]
             self.evaluate_current()
             self.move_index()
-            
+        print()
 
 
 if __name__ == "__main__":
