@@ -58,54 +58,62 @@ class Interpreter:
 
             # Pad the grid array so it becomes rectangular
             for line in temp_grid:
+                for char in line:
+                    if char == "\n":
+                        line.remove(char)
                 space_to_add = longest_line_length - len(line)
                 line += [" "] * space_to_add
-
         self.grid = temp_grid
 
+    def print_grid(self):
+        for line in self.grid:
+            print(line)
+
     def add(self):
-        a = int(self.stack.pop(-1))
-        b = int(self.stack.pop(-1))
+        a = self.pop_stack()
+        b = self.pop_stack()
         self.stack.append(a + b)
-    
+
     def sub(self):
-        a = int(self.stack.pop(-1))
-        b = int(self.stack.pop(-1))
+        a = self.pop_stack()
+        b = self.pop_stack()
         self.stack.append(b - a)
-    
+
     def mult(self):
-        a = int(self.stack.pop(-1))
-        b = int(self.stack.pop(-1))
+        a = self.pop_stack()
+        b = self.pop_stack()
         self.stack.append(a * b)
-    
+
     def div(self):
-        a = int(self.stack.pop(-1))
-        b = int(self.stack.pop(-1))
+        a = self.pop_stack()
+        b = self.pop_stack()
         try:
             self.stack.append(math.floor(b / a))
         except ZeroDivisionError:
             raise Exception(f"Attempted to divide {b} / {a}")
-    
+
     def mod(self):
-        a = int(self.stack.pop(-1))
-        b = int(self.stack.pop(-1))
+        a = self.pop_stack()
+        b = self.pop_stack()
         self.stack.append(b % a)
-    
+
     def log_not(self):
-        a = int(self.stack.pop(-1))
+        if len(self.stack) == 0:
+            return
+        a = self.pop_stack()
         if a == 0:
             self.stack.append(1)
         else:
             self.stack.append(0)
-    
+
     def log_greater(self):
-        a = int(self.stack.pop(-1))
-        b = int(self.stack.pop(-1))
+        a = self.pop_stack()
+        b = self.pop_stack()
         if b > a:
             self.stack.append(1)
         else:
             self.stack.append(0)
-    
+
     def pop_discard(self):
         self.pop_stack()
 
@@ -122,7 +130,7 @@ class Interpreter:
         if self.current.isascii() == False:
             return
         self.stack.append(ord(self.current))
-    
+
     def add_num_to_stack(self):
         if self.current.isnumeric() == False:
             return
@@ -159,7 +167,7 @@ class Interpreter:
 
     def change_direction(self):
         self.direction = directions[self.current]
-    
+
     def random_direction(self):
         self.direction = random.choice(list(directions.values()))
 
@@ -172,35 +180,60 @@ class Interpreter:
             self.index[0] += 1
         if self.direction == Direction.LEFT:
             self.index[1] -= 1
-    
+
     def get(self):
-        y = int(self.stack.pop(-1))
-        x = int(self.stack.pop(-1))
+        y = self.pop_stack()
+        x = self.pop_stack()
         self.stack.append(ord(self.grid[y][x]))
 
     def put(self):
-        y = int(self.stack.pop(-1))
-        x = int(self.stack.pop(-1))
+        y = self.pop_stack()
+        x = self.pop_stack()
         v = chr(self.stack.pop(-1))
         self.grid[y][x] = v
-    
+
     def swap(self):
         try:
             self.stack[-2], self.stack[-1] = self.stack[-1], self.stack[-2]
         except IndexError:
             pass
-    
+
     def num_input(self):
         self.stack.append(int(input()))
 
     def chr_input(self):
         self.stack.append(ord(input()))
 
+    def literals(self):
+        chars = {
+            "a": 10,
+            "b": 11,
+            "c": 12,
+            "d": 13,
+            "e": 14,
+            "f": 15,
+        }
+        self.stack.append(chars[self.current])
+
+    def fetch_char(self):
+        if self.direction == Direction.UP:
+            self.stack.append(ord(self.grid[self.index[0] - 1][self.index[1]]))
+        elif self.direction == Direction.RIGHT:
+            self.stack.append(ord(self.grid[self.index[0]][self.index[1] + 1]))
+        elif self.direction == Direction.DOWN:
+            self.stack.append(ord(self.grid[self.index[0] + 1][self.index[1]]))
+        elif self.direction == Direction.LEFT:
+            self.stack.append(ord(self.grid[self.index[0]][self.index[1] - 1]))
+
     def evaluate_current(self):
         if self.stringmode and self.current != '"':
             self.add_char_to_stack()
             return
-        
+
+        if self.current.isnumeric():
+            self.add_num_to_stack()
+            return
+
         functions = {
             "+": self.add,
             "-": self.sub,
@@ -212,6 +245,7 @@ class Interpreter:
             "\\": self.swap,
             "$": self.pop_discard,
             '"': self.toggle_stringmode,
+            "'": self.fetch_char,
             ",": self.pop_char_from_stack,
             ".": self.pop_num_from_stack,
             "^>v<": self.change_direction,
@@ -225,13 +259,12 @@ class Interpreter:
             "&": self.num_input,
             "~": self.chr_input,
             "@": self.stop,
+            "abcdef": self.literals,
         }
         for token in functions.keys():
             if self.current in token:
                 functions[token]()
-                break
-        else:
-            self.add_num_to_stack()
+                return
 
     def move_index(self):
         # y, x coordinates
@@ -243,7 +276,7 @@ class Interpreter:
             self.index[0] += 1
         elif self.direction == Direction.LEFT:
             self.index[1] -= 1
-        
+
         # Wrapping
         if self.index[0] >= len(self.grid):
             self.index[0] = 0
@@ -256,7 +289,6 @@ class Interpreter:
 
     def run(self):
         while self.running:
-            # print(self.stack)
             self.current = self.grid[self.index[0]][self.index[1]]
             self.evaluate_current()
             self.move_index()
